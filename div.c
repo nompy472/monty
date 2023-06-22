@@ -1,39 +1,21 @@
 #include "monty.h"
 /**
  * f_div - splits the top two elements of the stack.
- * @head: stack head
- * @counter: line_number
+ * @stack: pointer to head of linked list
+ * @line_number: counter
 */
-void f_div(stack_t **head, unsigned int counter)
+void f_div(stack_t **stack, unsigned int line_number)
 {
-	stack_t *h;
-	int len = 0, aux;
-
-	h = *head;
-	while (h)
+	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 	{
-		h = h->next;
-		len++;
+		set_op_tok_error(short_stack_error(unsigned int line_number, "div"));
+		return;
 	}
-	if (len < 2)
+	if ((*stack)->next->n == 0)
 	{
-		fprintf(stderr, "L%d: can't div, stack too short\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
+		set_op_tok_error(div_error(line_nember));
+		return;
 	}
-	h = *head;
-	if (h->n == 0)
-	{
-		fprintf(stderr, "L%d: division by zero\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
-	}
-	aux = h->next->n / h->n;
-	h->next->n = aux;
-	*head = h->next;
-	free(h);
+	(*stack)->next->next->n /= (*stack)->next->n;
+	f_pop(stack, line_number);
 }

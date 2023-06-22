@@ -2,12 +2,12 @@
 
 /**
  *f_nop-  doesn’t do anything
- *@head: stack head
- *@counter: line_number
+ *@stack: pointer to head node of stack
+ *@line_number: Bytcode file line counter
  */
 
-void f_nop(stack_t **head, unsigned int counter)
+void f_nop(stack_t **stack, unsigned int line_number)
 {
-	(void) counter;
-	(void) head;
+	(void)line_count;
+	(void)stack;
 }

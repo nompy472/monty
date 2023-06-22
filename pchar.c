@@ -3,30 +3,22 @@
 /**
  * f_pchar - prints a char at the top of the stack,
  * followed by a new line
- * @head: stack head
- * @counter: line_number
+ * @stack: pointer to head node of stack
+ * @line_number: Bytcode file line counter
 */
 
-void f_pchar(stack_t **head, unsigned int counter)
+void f_pchar(stack_t **stack, unsigned int line_number)
 {
-	stack_t *h;
-
-	h = *head;
-	if (!h)
+	if ((*stack)->next == NULL)
 	{
-		fprintf(stderr, "L%d: can't pchar, stack empty\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
+		set_op_tok_error(pchar_error(line_number, "stack empty"));
+		return;
 	}
-	if (h->n > 127 || h->n < 0)
+	if ((*stack)->n < 0 || (*stack)->next->n > 127)
 	{
-		fprintf(stderr, "L%d: can't pchar, value out of range\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
+		set_op_tok_error(pchar_error(line_number,
+					"Value out of range"));
+		return;
 	}
-	printf("%c\n", h->n);
+	printf("%c\n", (*stack)->next->n);
 }

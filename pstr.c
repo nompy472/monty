@@ -3,24 +3,20 @@
 /**
  * f_pstr - prints a string starting at the top of the stack,
  * followed by a new
- * @head: stack head
- * @counter: line_number
+ * @stack: pointer to head node of stack
+ * @line_number: Bytcode file line counter
 */
 
-void f_pstr(stack_t **head, unsigned int counter)
+void f_pstr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *h;
-	(void)counter;
+	stack_t *tmp = (*stack)->next;
 
-	h = *head;
-	while (h)
+	while (tmp && tmp->n != 0 && (tmp->n > 0 && tmp->n <= 127))
 	{
-		if (h->n > 127 || h->n <= 0)
-		{
-			break;
-		}
-		printf("%c", h->n);
-		h = h->next;
+		printf("%c", tmp->n);
+		tmp = tmp->next;
 	}
 	printf("\n");
+
+	void(line_number);
 }
